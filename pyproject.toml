@@ -1,0 +1,21 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "cydrogen"
+authors = [{name = "Lucas Ng", email = "ln373@cam.ac.uk"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+dependencies = [
+    "numpy >= 1.25",
+    "scipy >= 1.11",
+    "matplotlib >= 3.7",
+    "ordered-set >= 4.1.0, < 5",
+    "networkx >=3.0, < 4",
+]
+
+[project.urls]
+Home = "https://github.com/apple-phi/cydrogen"
