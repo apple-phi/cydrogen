@@ -11,6 +11,7 @@ s_naive = cydrogen.basic_system(*[2.5e5] * 4)
 s_optimised.simulate()
 ax_indiv = plt.figure("Individual").add_subplot()
 s_optimised.plot(ax_indiv, exclude_cls_or_names=(cydrogen.Sun,))
+ax_indiv.set_title("Energy profile of optimised system")
 s_naive.simulate()
 ax_cmp = plt.figure("Comparison").add_subplot()
 ax_cmp.plot(
@@ -21,6 +22,7 @@ ax_cmp.plot(s_naive.us[:, s_naive.g.inspect_ordering().index("OUTPUT")], label="
 ax_cmp.legend()
 ax_cmp.set_xlabel("Time (hours)")
 ax_cmp.set_ylabel("Energy (J)")
+ax_cmp.set_title("Comparison given a budget of 1M EUR")
 
 print("Comparison of optimised and naive systems given a budget of 1e6 EUR:")
 print()

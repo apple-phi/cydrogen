@@ -22,13 +22,16 @@ opt()
 opt = cydrogen.optimise.MinimiseHEVBudget(
     {
         "x0": np.array([13e3, 14e3, 24e3, 50e3]) * 1000,  # np.ones(4) * 7e5,
+        "method": "L-BFGS-B",
+        "jac": "3-point",
         "bounds": [(0, None)] * 4,
         "options": {"disp": True},
     }
 )
 opt.output_limit = cydrogen.YEARLY_HYUNDAI_NEXO_ENERGY_CONSUMPTION * 1e3
-opt()
+opt.optimise()
 """
 >>> # Gives minimum budget for each component in a basic linear system to support 1000 HEVs
 >>> f(4764064.435943611, 11573739.889519818, 627966.3862981284, 34059.37956929834)=16999830.091330856
+>>> The first value above means that 5.0116 kW of PV nameplate capacity is required.
 """
