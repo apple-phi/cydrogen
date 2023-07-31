@@ -1,3 +1,5 @@
+import warnings
+import traceback
 import numpy as np
 import abc
 import scipy.optimize
@@ -15,7 +17,7 @@ class Optimiser(abc.ABC):
         self.options.setdefault("callback", self.callback)
 
     @abc.abstractmethod
-    def objective(self, xs: np.ndarray):
+    def objective(self, xs: np.ndarray) -> np.ndarray:
         ...
 
     def callback(self, intermediate_result):
@@ -93,7 +95,9 @@ class MinimiseHEVBudget(Optimiser):
         try:
             s = basic_system(*xs)
             s.simulate()
-        except Exception:
+        except Exception as e:
+            warnings.warn(f"Ignoring exception {e} that occurred.")
+            traceback.print_exc()
             return self.BAD_VALUE
         return (
             sum(xs)

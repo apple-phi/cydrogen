@@ -4,6 +4,7 @@ Alexandros, Arselis: https://doi.org/10.1016/j.renene.2018.03.060
 H2 Storage: https://doi.org/10.1016/j.egypro.2012.09.076
 """
 import dataclasses
+import functools
 import math
 from typing import Optional, Tuple, Type
 import numpy as np
@@ -12,7 +13,10 @@ from .graph import Graph, Node, Edge, id_hash
 from .units import EUR, H2_LHV, KILO, PERCENT, WH, HOUR, J, W, kWH, kW
 
 
-PVWatts.api_key = "EF5VXVXX8NY0ONuhundhL5STynjc0vqhp9DsmKLz"
+PVWatts.api_key = (
+    "W52N5REJOHnPbRRLbYTeue4G83bdI1DH62tOP456"
+    or "EF5VXVXX8NY0ONuhundhL5STynjc0vqhp9DsmKLz"
+)
 PVWatts.PVWATTS_QUERY_URL = "https://developer.nrel.gov/api/pvwatts/v8.json"
 
 ###############################################################################
@@ -102,6 +106,7 @@ class Sun(EnergyStore):
     # NOTE: it is 950 EUR / kW in the paper, but that is not a unit of energy
     specific_energy_cost: float = 950 * EUR / kW / HOUR
     installation_cost: float = 3000 * EUR
+    _request = functools.lru_cache(PVWatts.request)
 
     def __init__(self, purchased):
         super().__init__()
@@ -111,7 +116,7 @@ class Sun(EnergyStore):
         self.installation_cost: float = 3000 * EUR
 
         # PVWatts.request returns a dictionary with the following keys: 'inputs', 'errors', 'warnings', 'version', 'ssc_info', 'station_info', 'location', 'outputs', 'temperature_air', 'temperature_cell', 'wind_speed'
-        self.data = PVWatts.request(
+        self.data = self._request(
             system_capacity=(purchased - self.installation_cost)
             / (self.specific_energy_cost * KILO * HOUR),  # Nameplate capacity (kW)
             module_type=1,  # Module type: 0: Standard, 1: Premium, 2: Thin film
@@ -124,7 +129,12 @@ class Sun(EnergyStore):
             lon=33.63,  # longitude for the location (west/east)- Larnaca
             timeframe="hourly",
         )
-        self.inputs = self.data.inputs
+        try:
+            self.inputs = self.data.raw["inputs"]
+        except KeyError as e:
+            raise RuntimeError(
+                f"Failed to access PVWatts API, rate-limiting is likely. API response: {self.data.raw}"
+            ) from e
         self.outputs = self.data.raw["outputs"]
 
 
