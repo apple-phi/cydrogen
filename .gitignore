@@ -1,5 +1,9 @@
 .vscode/
-**/build/
+
+!build/
+
+build/**
+!build/slides.pdf
 
 
 # Byte-compiled / optimized / DLL files
