@@ -19,6 +19,17 @@ PVWatts.api_key = (
 )
 PVWatts.PVWATTS_QUERY_URL = "https://developer.nrel.gov/api/pvwatts/v8.json"
 
+
+def set_pvwatts_api_key(key: str):
+    PVWatts.api_key = key
+
+
+def set_pvwatts_version(version: int):
+    PVWatts.PVWATTS_QUERY_URL = (
+        f"https://developer.nrel.gov/api/pvwatts/v{version}.json"
+    )
+
+
 ###############################################################################
 
 
