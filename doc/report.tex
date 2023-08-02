@@ -113,9 +113,13 @@
     as a competitor to pre-existing market alternatives. The relationships between two major abstractions
     in energy conversion networks---energy stores/resources and energy converters---were considered and explored,
     being modelled as a simple, directed, weakly-connected graph. This abstraction permits the formalisation
-    of state-dependent operators that can be applied to numerically integrate the state of the network
+    of state-dependent operators that can be applied to numerically integrate the network state
     over time, hence permitting the utilisation of the dynamic programming methods to analyse and optimise potential systems
-    subject to techno-economic constraints.
+    subject to techno-economic constraints. As a rough prediction, in a simplified linear system transforming solar energy into
+    hydrogen fuel, the total budget required is at minimum 70.8k\euro{} per hydrogen electric vehicle, of which
+    enough should be spent on photovoltaic cells to generate at least 4.6kW of PV capacity per HEV.
+    This work is intentionally generalisable to a wide class of energy systems, and provides
+    a stepping stone for future investigations modelling real-world systems in greater depth and complexity.
 }
 \newpage
 \section{Introduction}
@@ -178,7 +182,7 @@ In the above example, the high connectivity and number of nodes per layer will l
 but having a mathematical way to quantify the benefit of this connectivity
 is critical for determining the trade-off between economics and system performance.
 
-The objective of this article is to develop a generalised model for analysing the behaviour of such energy conversion networks
+The objective of this article is to develop a generalised model for analysing the behaviour of such energy conversion networks.
 
 \section{Methodology}
 \subsection{Preliminaries}
@@ -370,6 +374,7 @@ indication of either the implementations's failure to capture the non-linearitie
 or the failure of the optimisation algorithm to find the global minimum.
 \bigbreak
 
+
 \begin{figure}[htbp]
     \centering
     \begin{subfigure}[h]{\textwidth}
@@ -395,6 +400,12 @@ A general model was developed and implemented for the purpose of
 analysing the behaviour of energy conversion networks.
 Using a simple linear system as a demonstration, the model was applied to a techno-economic optimisation problem
 with sensible assumptions about component characteristics and yielded sensible results.
+As a rough guide---in this simplified linear system transforming solar energy into
+hydrogen fuel, the total budget required is at minimum 70.8k\euro{} per hydrogen electric vehicle, of which
+enough should be spent on photovoltaic cells to generate at least 4.6kW of PV capacity per HEV.
+This work is easily extendable and extensible for future investigation into the feasibility of using hydrogen as a fuel for electric vehicles.
+Such future investigations would be aided by using more accurate characteristic curves for component attributes
+when applying this model to more complex systems.
 \bibliography{refs}
 
 
